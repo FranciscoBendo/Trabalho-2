@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Gerenciador de Tarefas</string>
+
+    <!-- MainActivity -->
+    <string name="hint_task_title">Título da tarefa</string>
+    <string name="hint_task_priority">Prioridade (ex: Alta, Média, Baixa)</string>
+    <string name="btn_add_task">Adicionar tarefa</string>
+    <string name="label_my_tasks">Minhas tarefas (toque para ver detalhes):</string>
+    <string name="btn_view_statistics">Ver estatísticas (Jetpack Compose)</string>
+    <string name="default_priority">Normal</string>
+    <string name="msg_enter_title">Informe o título da tarefa</string>
+    <string name="msg_task_created">Tarefa \'%1$s\' criada</string>
+
+    <!-- TaskDetailActivity -->
+    <string name="label_category_none">Categoria: nenhuma</string>
+    <string name="label_category_format">Categoria: %1$s</string>
+    <string name="label_priority_format">Prioridade: %1$s</string>
+    <string name="label_choose_category">Escolha uma categoria:</string>
+    <string name="btn_mark_done">Marcar como concluída</string>
+    <string name="status_pending">Status: Pendente</string>
+    <string name="status_done">Status: Concluída</string>
+
+    <string-array name="categories_array">
+        <item>Trabalho</item>
+        <item>Pessoal</item>
+        <item>Estudo</item>
+        <item>Saúde</item>
+        <item>Lazer</item>
+        <item>Urgente</item>
+    </string-array>
+
+    <!-- StatisticsScreen (Compose) -->
+    <string name="title_statistics">Estatísticas</string>
+    <string name="label_summary">Resumo das Tarefas</string>
+    <string name="label_total_tasks">Total de tarefas: %1$d</string>
+    <string name="label_completed_tasks">Tarefas concluídas: %1$d</string>
+    <string name="label_percent_complete">%1$d%% concluído</string>
+    <string name="btn_back">Voltar</string>
+</resources>

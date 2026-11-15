@@ -1,0 +1,19 @@
+﻿# Gradle
+.gradle/
+build/
+
+# Local / IDE
+local.properties
+.idea/
+*.iml
+.DS_Store
+captures/
+
+# Assinatura e segredos
+*.jks
+*.keystore
+keystore.properties
+google-services.json
+
+# Logs
+*.log
