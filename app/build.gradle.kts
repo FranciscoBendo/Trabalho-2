@@ -47,4 +47,7 @@ dependencies {
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
     implementation("androidx.activity:activity-compose:1.9.1")
+
+    // Mapa (OpenStreetMap) - não precisa de chave de API
+    implementation("org.osmdroid:osmdroid-android:6.1.18")
 }

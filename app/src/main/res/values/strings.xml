@@ -8,6 +8,7 @@
     <string name="btn_add_task">Adicionar tarefa</string>
     <string name="label_my_tasks">Minhas tarefas (toque para ver detalhes):</string>
     <string name="btn_view_statistics">Ver estatísticas (Jetpack Compose)</string>
+    <string name="btn_open_map">Abrir mapa (rotaciona com o sensor)</string>
     <string name="default_priority">Normal</string>
     <string name="msg_enter_title">Informe o título da tarefa</string>
     <string name="msg_task_created">Tarefa \'%1$s\' criada</string>
@@ -37,4 +38,13 @@
     <string name="label_completed_tasks">Tarefas concluídas: %1$d</string>
     <string name="label_percent_complete">%1$d%% concluído</string>
     <string name="btn_back">Voltar</string>
+
+    <!-- MapActivity -->
+    <string name="map_heading_waiting">Aguardando sensor…</string>
+    <string name="map_heading_format">Direção: %1$d° %2$s</string>
+    <string name="btn_map_rotate_on">Rotação: ligada</string>
+    <string name="btn_map_rotate_off">Rotação: desligada</string>
+    <string name="btn_map_recenter">Centralizar</string>
+    <string name="msg_location_denied">Sem permissão de localização, o mapa não mostra a sua posição.</string>
+    <string name="msg_no_sensor">Este aparelho não tem sensor de rotação; o mapa não vai girar.</string>
 </resources>
