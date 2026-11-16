@@ -25,6 +25,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var btnAdd: Button
     private lateinit var lvTasks: ListView
     private lateinit var btnStats: Button
+    private lateinit var btnMap: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,6 +37,7 @@ class MainActivity : AppCompatActivity() {
         btnAdd = findViewById(R.id.btnAddTask)
         lvTasks = findViewById(R.id.lvTasks)
         btnStats = findViewById(R.id.btnStats)
+        btnMap = findViewById(R.id.btnMap)
 
         viewModel = ViewModelProvider(this)[TaskViewModel::class.java]
 
@@ -79,6 +81,11 @@ class MainActivity : AppCompatActivity() {
             intent.putExtra(EXTRA_TOTAL, viewModel.totalCount())
             intent.putExtra(EXTRA_DONE, viewModel.completedCount())
             startActivity(intent)
+        }
+
+        // Navegação para a tela do mapa (gira de acordo com o sensor de orientação)
+        btnMap.setOnClickListener {
+            startActivity(Intent(this, MapActivity::class.java))
         }
     }
 
