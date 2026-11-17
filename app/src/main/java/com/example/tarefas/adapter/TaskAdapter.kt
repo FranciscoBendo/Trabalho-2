@@ -16,11 +16,11 @@ import com.example.tarefas.model.Task
 
 class TaskAdapter(
     private val context: Context,
-    private var tasks: MutableList<Task>,
+    private var tasks: List<Task>,
     private val onToggle: (Task) -> Unit
 ) : BaseAdapter() {
 
-    fun updateTasks(newTasks: MutableList<Task>) {
+    fun updateTasks(newTasks: List<Task>) {
         tasks = newTasks
         notifyDataSetChanged()
     }

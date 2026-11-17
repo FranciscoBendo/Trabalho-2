@@ -5,18 +5,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.example.tarefas.adapter.CategoryAdapter
 import com.example.tarefas.databinding.ActivityTaskDetailBinding
+import com.example.tarefas.model.Task
 import com.example.tarefas.viewmodel.TaskViewModel
-
-/**
- * Tela 2: detalhe da tarefa, recebida via Intent a
- * partir da MainActivity. Layout raiz é um ConstraintLayout e usa GridView
- * para escolha de categoria.*/
 
 class TaskDetailActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityTaskDetailBinding
     private lateinit var viewModel: TaskViewModel
-    private var taskId: Int = -1
+    private var tarefaAtual: Task? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,29 +23,29 @@ class TaskDetailActivity : AppCompatActivity() {
 
         viewModel = ViewModelProvider(this)[TaskViewModel::class.java]
 
-        // Recebendo os dados enviados via Intent
-        taskId = intent.getIntExtra(MainActivity.EXTRA_TASK_ID, -1)
-        val title = intent.getStringExtra(MainActivity.EXTRA_TASK_TITLE) ?: ""
-        val priority = intent.getStringExtra(MainActivity.EXTRA_TASK_PRIORITY) ?: ""
-
-        // O valor recebido é utilizado na tela de destino
-        binding.tvDetailTitle.text = title
-        binding.tvDetailPriority.text = "Prioridade: $priority"
+        val taskId = intent.getIntExtra(MainActivity.EXTRA_TASK_ID, -1)
+        if (taskId == -1) { finish(); return }
 
         val categorias = listOf("Trabalho", "Pessoal", "Estudo", "Saúde", "Lazer", "Urgente")
         binding.gridCategories.adapter = CategoryAdapter(this, categorias)
 
+        // A tela sempre reflete o que está no banco
+        viewModel.getTask(taskId).observe(this) { t ->
+            if (t == null) return@observe
+            tarefaAtual = t
+            binding.tvDetailTitle.text = t.title
+            binding.tvDetailPriority.text = getString(R.string.label_priority_format, t.priority)
+            binding.tvDetailCategory.text = getString(R.string.label_category_format, t.category)
+            binding.tvDetailStatus.setText(if (t.isDone) R.string.status_done else R.string.status_pending)
+            binding.btnToggleDone.setText(if (t.isDone) R.string.btn_mark_pending else R.string.btn_mark_done)
+        }
+
         binding.gridCategories.setOnItemClickListener { _, _, position, _ ->
-            val categoriaEscolhida = categorias[position]
-            viewModel.updateCategory(taskId, categoriaEscolhida)
-            binding.tvDetailCategory.text = "Categoria: $categoriaEscolhida"
+            tarefaAtual?.let { viewModel.updateCategory(it, categorias[position]) }
         }
 
         binding.btnToggleDone.setOnClickListener {
-            viewModel.toggleDone(taskId)
-            val tarefaAtual = viewModel.getTask(taskId)
-            binding.tvDetailStatus.text =
-                if (tarefaAtual?.isDone == true) "Status: Concluída" else "Status: Pendente"
+            tarefaAtual?.let { viewModel.toggleDone(it) }
         }
     }
 }

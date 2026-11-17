@@ -20,6 +20,7 @@
     <string name="btn_mark_done">Marcar como concluída</string>
     <string name="status_pending">Status: Pendente</string>
     <string name="status_done">Status: Concluída</string>
+    <string name="btn_mark_pending">Marcar como pendente</string>
 
     <string-array name="categories_array">
         <item>Trabalho</item>

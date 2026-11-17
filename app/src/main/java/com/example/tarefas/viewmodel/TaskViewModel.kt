@@ -1,30 +1,41 @@
 package com.example.tarefas.viewmodel
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.tarefas.data.AppDataBase
 import com.example.tarefas.model.Task
-import com.example.tarefas.model.TaskRepository
+import kotlinx.coroutines.launch
 
-/*faz a ponte entre a View e o Model. Não conhece nada de Android UI (não referencia
- * Views, Contexts de tela, etc.), apenas expõe dados observáveis e ações.*/
+/* Faz a ponte entre a View e o Model. Não referencia Views nem Contexts de tela:
+ * usa apenas o Application para obter o banco. Expõe dados observáveis e ações. */
 
-class TaskViewModel : ViewModel() {
+class TaskViewModel(application: Application) : AndroidViewModel(application) {
 
-    val tasks: LiveData<MutableList<Task>> = TaskRepository.tasks
+    private val dao = AppDataBase.getInstance(application).taskDao()
 
+    val tasks: LiveData<List<Task>> = dao.listar()
+
+    fun getTask(taskId: Int): LiveData<Task?> = dao.buscar(taskId)
+
+    // Recebe parâmetros, processa (limpa o texto, aplica prioridade padrão) e retorna valor
     fun addTask(title: String, priority: String): Task {
-        return TaskRepository.addTask(title, priority)
+        val nova = Task(
+            title = title.trim(),
+            priority = priority.trim().ifEmpty { "Normal" }
+        )
+        viewModelScope.launch { dao.inserir(nova) }
+        return nova
     }
 
-    fun toggleDone(taskId: Int) {
-        TaskRepository.toggleDone(taskId)
+    fun toggleDone(task: Task) {
+        viewModelScope.launch { dao.atualizar(task.copy(isDone = !task.isDone)) }
     }
 
-    fun updateCategory(taskId: Int, category: String) {
-        TaskRepository.updateCategory(taskId, category)
+    fun updateCategory(task: Task, category: String) {
+        viewModelScope.launch { dao.atualizar(task.copy(category = category)) }
     }
-
-    fun getTask(taskId: Int): Task? = TaskRepository.findById(taskId)
 
     fun completedCount(): Int = tasks.value?.count { it.isDone } ?: 0
 
